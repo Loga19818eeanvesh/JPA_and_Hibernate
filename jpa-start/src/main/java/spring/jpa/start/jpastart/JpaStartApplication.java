@@ -1,5 +1,6 @@
 package spring.jpa.start.jpastart;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import spring.jpa.start.jpastart.entity.Course;
+import spring.jpa.start.jpastart.entity.Review;
 import spring.jpa.start.jpastart.repository.CourseRepository;
 import spring.jpa.start.jpastart.repository.StudentRepository;
 
@@ -36,7 +38,7 @@ public class JpaStartApplication implements CommandLineRunner{
 		Course course = courseRepository.findById(10001L);
 		logger.info("Course 10001 -> {}", course);
 		
-		courseRepository.deleteById(10001L);
+		courseRepository.deleteById(10002L);
 		
 		courseRepository.save(new Course("Microservices"));
 		
@@ -51,6 +53,13 @@ public class JpaStartApplication implements CommandLineRunner{
 		studentRepository.saveStudentWithPassport();
 		
 		studentRepository.retrievePassportAndAssociatedStudent();
+		
+		List<Review> reviews = new ArrayList<>();
+		
+		reviews.add(new Review("5", "Great Hands-on Stuff."));	
+		reviews.add(new Review("5", "Hatsoff."));
+
+		courseRepository.addReviewsForCourse(10003L, reviews );	
 		
 	}
 

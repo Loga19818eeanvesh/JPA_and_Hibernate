@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import spring.jpa.start.jpastart.entity.Course;
 import spring.jpa.start.jpastart.entity.Passport;
 import spring.jpa.start.jpastart.entity.Student;
 
@@ -73,5 +74,18 @@ public class StudentRepository {
 		logger.info("student -> {}", passport.getStudent());
 	}
 	
+	public void retrieveStudentAndCourses() {
+		Student student = entityManager.find(Student.class, 20001L);
+		
+		logger.info("student -> {}", student);
+		logger.info("courses -> {}", student.getCourses());
+	}
 	
+	public void insertStudentAndCourse(Student student, Course course){
+		student.addCourse(course);
+		course.addStudent(student);
+
+		entityManager.persist(student);
+		entityManager.persist(course);
+	}
 }

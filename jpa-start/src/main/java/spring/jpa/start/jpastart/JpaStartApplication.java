@@ -1,5 +1,6 @@
 package spring.jpa.start.jpastart;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +12,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import spring.jpa.start.jpastart.entity.Course;
+import spring.jpa.start.jpastart.entity.FullTimeEmployee;
+import spring.jpa.start.jpastart.entity.PartTimeEmployee;
 import spring.jpa.start.jpastart.entity.Review;
 import spring.jpa.start.jpastart.repository.CourseRepository;
+import spring.jpa.start.jpastart.repository.EmployeeRepository;
 import spring.jpa.start.jpastart.repository.StudentRepository;
 
 @SpringBootApplication
@@ -25,6 +29,9 @@ public class JpaStartApplication implements CommandLineRunner{
 	
 	@Autowired
 	private StudentRepository studentRepository;
+	
+	@Autowired
+	private EmployeeRepository employeeRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(JpaStartApplication.class, args);
@@ -60,6 +67,12 @@ public class JpaStartApplication implements CommandLineRunner{
 		reviews.add(new Review("5", "Hatsoff."));
 
 		courseRepository.addReviewsForCourse(10003L, reviews );	
+		
+		employeeRepository.insert(new PartTimeEmployee("Jill", new BigDecimal("50")));
+		employeeRepository.insert(new FullTimeEmployee("Jack", new BigDecimal("10000")));
+
+		logger.info("All Employees -> {}", employeeRepository.retrieveAllEmployees());
+		courseRepository.findById_firstLevelCacheDemo();
 		
 	}
 

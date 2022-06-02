@@ -118,4 +118,14 @@ public class CourseRepository {
 		logger.info("student -> {}", course);
 		logger.info("courses -> {}", course.getStudents());
 	}
+	
+	public void findById_firstLevelCacheDemo() {
+		
+		Course course = findById(10001L);
+		logger.info("First Course Retrieved {}", course);
+
+		Course course1 = findById(10001L);
+		logger.info("First Course Retrieved again {}", course1);
+
+	}
 }
